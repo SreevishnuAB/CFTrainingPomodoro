@@ -1,0 +1,5 @@
+---
+applications:
+- name: pomodoroui5
+  memory: 64M
+  buildpack: staticfile_buildpack
