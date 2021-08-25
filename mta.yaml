@@ -1,0 +1,94 @@
+_schema-version: "3.2"
+ID: pomodoro
+description: A Fiori application.
+version: 0.0.1
+modules:
+- name: pomodoro-dest-content
+  type: com.sap.application.content
+  requires:
+  - name: pomodoro-dest-srv
+    parameters:
+      content-target: true
+  - name: pomodoro-repo-host
+    parameters:
+      service-key:
+        name: pomodoro-repo-host-key
+  - name: pomodoro-uaa
+    parameters:
+      service-key:
+        name: pomodoro-uaa-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: pomodoro_repo_host
+          ServiceInstanceName: pomodoro-html5-srv
+          ServiceKeyName: pomodoro-repo-host-key
+          sap.cloud.service: pomodoro
+        - Authentication: OAuth2UserTokenExchange
+          Name: pomodoro_uaa
+          ServiceInstanceName: pomodoro-xsuaa-srv
+          ServiceKeyName: pomodoro-uaa-key
+          sap.cloud.service: pomodoro
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: pomodoro-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: pomodoro-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - pomodoro.zip
+      name: pomodoro
+      target-path: resources/
+- name: pomodoro
+  type: html5
+  path: .
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: pomodoro-dest-srv
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: pomodoro-dest-srv
+    service-plan: lite
+- name: pomodoro-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: pomodoro-xsuaa-srv
+    service-plan: application
+- name: pomodoro-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: pomodoro-html5-srv
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true

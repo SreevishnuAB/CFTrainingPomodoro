@@ -1,0 +1,29 @@
+/* Enter your custom styles here */
+
+.increasesize
+{
+	
+	font-size: 48px !important;
+	 color:red;
+	
+}
+.imagesize{
+	 height: 2px;
+  width: 5%;
+  
+}
+
+.abc{
+	color:red;
+}
+.colr{
+	color:red;
+	
+}
+.img{
+	background-image: url(/css/images/pomodoro.jpg);
+background-repeat: no-repeat;
+width: 600px;
+height: 200px;
+}
+

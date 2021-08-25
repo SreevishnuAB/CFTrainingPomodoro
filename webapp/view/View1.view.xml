@@ -1,0 +1,52 @@
+<mvc:View controllerName="pomodoro.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app" class="sapUiResponsiveMargin">
+			<pages>
+				<Page>
+					<customHeader>
+						<Toolbar>
+							<ToolbarSpacer/>
+							<Image src="css/images/pomodoro.jpg" height="30px" width="30px"/>
+							<Title text="{i18n>title}" level="H2"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</customHeader>
+					<Panel backgroundDesign="Transparent">
+						<HBox>
+							<Input change="onChange" placeholder="Enter Email" id="email" value=""/>
+							<Button enabled="false" class="sapUiTinyMarginBeginEnd" press="onenter" text="Enter" id="enter"/></HBox>
+						<FlexBox height="90px" alignItems="Center" justifyContent="Center">
+							<items>
+								<Button press="handleOpenDialog" text="Select Timer" id="timer" enabled="false"/>
+							</items>
+						</FlexBox>
+					</Panel>
+					<Panel backgroundDesign="Transparent">
+						<FlexBox height="90px" alignItems="Center" justifyContent="Center">
+							<FlexBox height="100px" alignItems="Center" justifyContent="Center">
+								<items>
+									<Text text="00:00" id="T1" class="increasesize"/>
+								</items>
+							</FlexBox>
+						</FlexBox>
+					</Panel>
+					<Panel backgroundDesign="Transparent">
+						<FlexBox height="90px" alignItems="Center" justifyContent="Center">
+							<items>
+								<Button enabled="false" icon="sap-icon://play" type="Transparent" id="start" press="onstart" ariaLabelledBy="media-playButtonLabel"></Button>
+								<Button enabled="false" icon="sap-icon://stop" type="Transparent" id="stop" press="onStop" ariaLabelledBy="media-stopButtonLabel"></Button>
+								<Button enabled="false" icon="sap-icon://sys-cancel" type="Transparent" id="clear" press="onClear" ariaLabelledBy="clearButtonLabel"></Button>
+							</items>
+						</FlexBox>
+					</Panel>
+					<footer>
+						<Toolbar>
+							<ToolbarSpacer/>
+							<Button text="Show History" type="Emphasized" press="onOpenDialog"/>
+						</Toolbar>
+					</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
